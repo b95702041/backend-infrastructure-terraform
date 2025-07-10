@@ -1,0 +1,23 @@
+﻿# Terraform files
+*.tfstate
+*.tfstate.*
+*.tfvars
+.terraform/
+.terraform.lock.hcl
+terraform.tfplan
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Jenkins
+jenkins/secrets/
+jenkins/workspace/
+
+# Logs
+*.log
