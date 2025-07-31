@@ -78,3 +78,34 @@ output "ecs_log_group" {
   description = "CloudWatch log group for ECS containers"
   value       = module.ecs.log_group_name
 }
+
+# Jenkins Outputs  
+output "jenkins_url" {
+  description = "URL to access Jenkins CI/CD platform"
+  value       = module.jenkins.jenkins_url
+}
+
+output "jenkins_admin_user" {
+  description = "Jenkins admin username"
+  value       = module.jenkins.jenkins_admin_user
+}
+
+output "jenkins_credentials_secret_name" {
+  description = "Name of the Secrets Manager secret containing Jenkins credentials"
+  value       = module.jenkins.jenkins_credentials_secret_name
+}
+
+output "ecr_repository_url" {
+  description = "ECR repository URL for application Docker images"
+  value       = module.jenkins.ecr_repository_url
+}
+
+output "ecr_repository_name" {
+  description = "ECR repository name"
+  value       = module.jenkins.ecr_repository_name
+}
+
+output "jenkins_log_group_name" {
+  description = "CloudWatch log group for Jenkins"
+  value       = module.jenkins.jenkins_log_group_name
+}

@@ -106,3 +106,65 @@ variable "ecs_health_check_path" {
   type        = string
   default     = "/"
 }
+
+# Jenkins Configuration
+variable "jenkins_admin_user" {
+  description = "Jenkins admin username"
+  type        = string
+  default     = "admin"
+}
+
+variable "jenkins_admin_password" {
+  description = "Jenkins admin password (leave null for auto-generated)"
+  type        = string
+  default     = null
+  sensitive   = true
+}
+
+variable "jenkins_cpu" {
+  description = "CPU units for Jenkins container (512 = 0.5 vCPU)"
+  type        = number
+  default     = 512  # Cost-effective for dev
+}
+
+variable "jenkins_memory" {
+  description = "Memory in MB for Jenkins container"
+  type        = number
+  default     = 1024  # 1GB for Jenkins
+}
+
+variable "jenkins_desired_count" {
+  description = "Desired number of Jenkins instances"
+  type        = number
+  default     = 1
+}
+
+variable "jenkins_create_ecr_repository" {
+  description = "Create ECR repository for application images"
+  type        = bool
+  default     = true
+}
+
+variable "jenkins_ecr_repository_name" {
+  description = "Name of the ECR repository"
+  type        = string
+  default     = null  # Will use project-environment default
+}
+
+variable "jenkins_efs_enabled" {
+  description = "Enable EFS storage for Jenkins persistence"
+  type        = bool
+  default     = false  # Temporarily disable until we fix permissions
+}
+
+variable "jenkins_allowed_cidr_blocks" {
+  description = "CIDR blocks allowed to access Jenkins"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]  # Internet access for dev
+}
+
+variable "jenkins_default_git_repository" {
+  description = "Default Git repository URL for Jenkins pipeline"
+  type        = string
+  default     = ""
+}
