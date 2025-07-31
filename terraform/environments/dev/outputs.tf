@@ -1,6 +1,7 @@
 # terraform/environments/dev/outputs.tf
-# Outputs for the development environment
+# Output values from the development environment
 
+# VPC Outputs
 output "vpc_id" {
   description = "ID of the VPC"
   value       = module.vpc.vpc_id
@@ -22,11 +23,58 @@ output "private_subnet_ids" {
 }
 
 output "availability_zones" {
-  description = "Availability zones used"
+  description = "List of availability zones used"
   value       = module.vpc.availability_zones
 }
 
 output "nat_gateway_ids" {
   description = "IDs of the NAT Gateways"
   value       = module.vpc.nat_gateway_ids
+}
+
+# Database Outputs
+output "database_endpoint" {
+  description = "RDS instance endpoint for application connections"
+  value       = module.rds.db_endpoint
+}
+
+output "database_port" {
+  description = "RDS instance port"
+  value       = module.rds.db_port
+}
+
+output "database_name" {
+  description = "Database name"
+  value       = module.rds.db_name
+}
+
+output "secrets_manager_secret_name" {
+  description = "Name of the Secrets Manager secret containing database credentials"
+  value       = module.rds.secrets_manager_secret_name
+}
+
+# ECS Outputs
+output "ecs_cluster_name" {
+  description = "Name of the ECS cluster"
+  value       = module.ecs.cluster_name
+}
+
+output "ecs_service_name" {
+  description = "Name of the ECS service"
+  value       = module.ecs.service_name
+}
+
+output "application_url" {
+  description = "Public URL of the application via Application Load Balancer"
+  value       = module.ecs.alb_url
+}
+
+output "load_balancer_dns" {
+  description = "DNS name of the Application Load Balancer"
+  value       = module.ecs.alb_dns_name
+}
+
+output "ecs_log_group" {
+  description = "CloudWatch log group for ECS containers"
+  value       = module.ecs.log_group_name
 }

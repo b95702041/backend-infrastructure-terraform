@@ -62,3 +62,37 @@ module "rds" {
   deletion_protection = false  # Allow deletion in dev
   skip_final_snapshot = true   # Skip snapshot for dev
 }
+
+# Create ECS cluster with Fargate and Application Load Balancer
+module "ecs" {
+  source = "../../modules/ecs"
+  
+  project_name       = var.project_name
+  environment        = var.environment
+  vpc_id            = module.vpc.vpc_id
+  public_subnet_ids  = module.vpc.public_subnet_ids
+  private_subnet_ids = module.vpc.private_subnet_ids
+  vpc_cidr_block    = module.vpc.vpc_cidr_block
+  
+  # Database integration
+  db_endpoint               = module.rds.db_endpoint
+  db_port                  = module.rds.db_port
+  db_security_group_id     = module.rds.db_security_group_id
+  secrets_manager_secret_arn = module.rds.secrets_manager_secret_arn
+  
+  # ECS configuration for dev environment
+  service_name     = var.ecs_service_name
+  container_image  = var.ecs_container_image
+  container_port   = var.ecs_container_port
+  container_cpu    = var.ecs_container_cpu
+  container_memory = var.ecs_container_memory
+  desired_count    = var.ecs_desired_count
+  
+  # Load balancer and scaling
+  enable_load_balancer = var.ecs_enable_load_balancer
+  enable_auto_scaling  = var.ecs_enable_auto_scaling
+  health_check_path    = var.ecs_health_check_path
+  
+  # Development-specific settings
+  enable_execute_command = true  # Enable ECS Exec for debugging
+}
